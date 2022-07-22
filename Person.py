@@ -56,7 +56,17 @@ class Person:
                     break
             print(f"{id_} id'li kayıt dosyada bulunamadı ...")
     
-    def updatePerson():
-        pass
+    def updatePerson(id, name, lastName, nationalityId):
+        with open('person_data.json') as file:
+            data = json.load(file)
+            for i in data:
+                if i["id"] == id:
+                    new_data = i
+                    data.remove(i)
+                    new_data = {"id": id, "name": name, "lastName": lastName, "nationalityId": nationalityId, "e-mail": name.lower() + '.' + lastName.lower() + '@company.com'}
+                    data.append(new_data)
+                    with open('person_data.json', 'w') as fu:
+                        fu.write(json.dumps(data, indent=2))
+            print("Kayıt Güncellendi") 
       
-Person.findPerson(4)
+Person.updatePerson(1, "Cristiano", "Ronaldo", "CR07")
